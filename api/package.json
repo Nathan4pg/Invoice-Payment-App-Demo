@@ -1,0 +1,33 @@
+{
+  "name": "apollo-server-invoices",
+  "version": "1.0.0",
+  "description": "A simple Apollo Server project with invoices data",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts",
+    "serve": "node dist/index.js"
+  },
+  "keywords": [
+    "Apollo Server",
+    "GraphQL",
+    "invoices",
+    "TypeScript"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@apollo/server": "^4.7.0",
+    "apollo-server-express": "^3.12.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "@types/node": "^18.16.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
+}
