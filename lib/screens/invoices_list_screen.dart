@@ -7,12 +7,9 @@ class InvoicesListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Invoices List')),
-      body: const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: InvoicesList(),
-      ),
-    );
+    return Column(children: const [
+      Text('Check for update'),
+      InvoicesList(),
+    ]);
   }
 }

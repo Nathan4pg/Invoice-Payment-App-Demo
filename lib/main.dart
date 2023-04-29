@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_invoice_app/widgets/invoices_list.dart';
+import 'package:flutter_invoice_app/screens/invoices_list_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(title: const Text('Invoices List')),
         body: const Padding(
           padding: EdgeInsets.all(8.0),
-          child: InvoicesList(),
+          child: InvoicesListScreen(),
         ),
       ),
     );
