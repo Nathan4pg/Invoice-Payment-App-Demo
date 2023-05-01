@@ -154,6 +154,8 @@ export const resolvers = {
         sortDirection: SortDirectionEnum;
       }
     ): InvoicesConnection => {
+      console.log("Query: invoices"); // Log when the query is hit
+
       let sortedInvoices = invoices.slice();
 
       if (sortBy === SortByEnum.DUE_DATE_ASC) {
@@ -192,6 +194,9 @@ export const resolvers = {
         endCursor:
           edges.length > 0 ? edges[edges.length - 1].cursor : undefined,
       };
+
+      console.log("Response:", { edges, pageInfo }); // Log the response
+
       return {
         edges,
         pageInfo,

@@ -10,7 +10,12 @@ class InvoicesList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final invoicesAsyncValue =
-        ref.watch(invoicesQueryProvider(InvoicesQueryParams()));
+        ref.watch(invoicesQueryProvider(InvoicesQueryParams(
+      first: 10, // Change this value to 10 to fetch the first 10 invoices
+      after: null,
+      sortBy: SortByEnum.DUE_DATE_DESC,
+      sortDirection: SortDirectionEnum.DESC,
+    )));
     final selectedInvoices = ref.watch(selectedInvoicesProvider);
 
     return invoicesAsyncValue.when(

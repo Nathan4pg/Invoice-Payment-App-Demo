@@ -15,58 +15,86 @@ final invoicesQueryProvider = FutureProvider.autoDispose
   final client = ref.read(apolloClientProvider);
   final result = await client.query(QueryOptions(
     document: gql('''
-      query GetInvoices(\$first: Int, \$after: ID, \$sortBy: SortByEnum = DUE_DATE_ASC, \$sortDirection: SortDirectionEnum = ASC) {
-        invoices(first: \$first, after: \$after, sortBy: \$sortBy, sortDirection: \$sortDirection) {
-          edges {
-            cursor
-            node {
-              id
-              amount
-              paid
-              dueDate
-              paidDate
-              grossAmount
-              invoicedDate
-              orderNumber
-              deliveryDate
-              salesRepresentative
-              shippingCompany
-              shipmentTrackingId
-            }
-          }
-          pageInfo {
-            endCursor
-            hasNextPage
+    query GetInvoices(\$first: Int, \$after: ID, \$sortBy: SortByEnum = DUE_DATE_ASC, \$sortDirection: SortDirectionEnum = ASC) {
+      invoices(first: \$first, after: \$after, sortBy: \$sortBy, sortDirection: \$sortDirection) {
+        edges {
+          cursor
+          node {
+            id
+            amount
+            paid
+            dueDate
+            paidDate
+            grossAmount
+            invoicedDate
+            orderNumber
+            deliveryDate
+            salesRepresentative
+            shippingCompany
+            shipmentTrackingId
           }
         }
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
       }
-    '''),
+    }
+  '''),
     variables: {
       'first': queryParams.first,
       'after': queryParams.after,
-      'sortBy': queryParams.sortBy,
-      'sortDirection': queryParams.sortDirection,
+      'sortBy': queryParams.sortBy.toString(),
+      'sortDirection': queryParams.sortDirection.toString(),
     },
   ));
+
   if (result.hasException) {
-    throw result.exception!;
+    throw Exception('Failed to fetch invoices: ${result.exception}');
   }
 
   final List<dynamic> edges = result.data?['invoices']['edges'];
+
+  // print("invoices should be: ${result.data?['invoices']}");
+  // print("hhhhnnnngggg: ${edges.map((dynamic edge) => )}")
+  // print('edges: $edges');
+
+  // FIXME: Code fails past this point
   final invoices =
       edges.map((dynamic edge) => Invoice.fromJson(edge['node'])).toList();
+
+  // THIS RETURNS NOTHING!!!
+  edges.map((dynamic edge) => print("edge: ${Invoice.fromJson(edge['node'])}"));
+
+  // FIXME: This seems to be the big problem, this isn't returning
+  // that suggests there is an issue in the invoices variable above
+  print('invoices: $invoices');
 
   return invoices;
 });
 
-enum SortByEnum {
-  DUE_DATE_ASC,
-  DUE_DATE_DESC,
+class SortByEnum {
+  final String value;
+
+  const SortByEnum._(this.value);
+
+  static const DUE_DATE_ASC = SortByEnum._('DUE_DATE_ASC');
+  static const DUE_DATE_DESC = SortByEnum._('DUE_DATE_DESC');
+
+  @override
+  String toString() => value;
 }
 
-enum SortDirectionEnum {
-  ASC,
-  DESC,
+class SortDirectionEnum {
+  final String value;
+
+  const SortDirectionEnum._(this.value);
+
+  static const ASC = SortDirectionEnum._('ASC');
+  static const DESC = SortDirectionEnum._('DESC');
+
+  @override
+  String toString() => value;
 }
 
 class InvoicesQueryParams {
