@@ -55,21 +55,10 @@ final invoicesQueryProvider = FutureProvider.autoDispose
 
   final List<dynamic> edges = result.data?['invoices']['edges'];
 
-  // print("invoices should be: ${result.data?['invoices']}");
-  // print("hhhhnnnngggg: ${edges.map((dynamic edge) => )}")
-  // print('edges: $edges');
-
-  // FIXME: Code fails past this point
   final invoices =
       edges.map((dynamic edge) => Invoice.fromJson(edge['node'])).toList();
 
-  // THIS RETURNS NOTHING!!!
-  edges.map((dynamic edge) => print("edge: ${Invoice.fromJson(edge['node'])}"));
-
-  // FIXME: This seems to be the big problem, this isn't returning
-  // that suggests there is an issue in the invoices variable above
-  print('invoices: $invoices');
-
+  // print('invoices: $invoices');
   return invoices;
 });
 
@@ -78,8 +67,8 @@ class SortByEnum {
 
   const SortByEnum._(this.value);
 
-  static const DUE_DATE_ASC = SortByEnum._('DUE_DATE_ASC');
-  static const DUE_DATE_DESC = SortByEnum._('DUE_DATE_DESC');
+  static const dueDateAsc = SortByEnum._('DUE_DATE_ASC');
+  static const dueDateDesc = SortByEnum._('DUE_DATE_DESC');
 
   @override
   String toString() => value;
@@ -90,8 +79,8 @@ class SortDirectionEnum {
 
   const SortDirectionEnum._(this.value);
 
-  static const ASC = SortDirectionEnum._('ASC');
-  static const DESC = SortDirectionEnum._('DESC');
+  static const asc = SortDirectionEnum._('ASC');
+  static const desc = SortDirectionEnum._('DESC');
 
   @override
   String toString() => value;
@@ -106,8 +95,8 @@ class InvoicesQueryParams {
   InvoicesQueryParams({
     this.first,
     this.after,
-    this.sortBy = SortByEnum.DUE_DATE_ASC,
-    this.sortDirection = SortDirectionEnum.ASC,
+    this.sortBy = SortByEnum.dueDateAsc,
+    this.sortDirection = SortDirectionEnum.asc,
   });
 }
 
@@ -141,21 +130,44 @@ class Invoice {
   });
 
   factory Invoice.fromJson(Map<String, dynamic> json) {
-    return Invoice(
-      id: json['id'] as String,
-      amount: json['amount'] as String,
-      paid: json['paid'] as bool,
-      dueDate: DateTime.parse(json['dueDate'] as String),
-      paidDate: json['paidDate'] != null
-          ? DateTime.parse(json['paidDate'] as String)
-          : null,
-      grossAmount: json['grossAmount'] as String,
-      invoicedDate: DateTime.parse(json['invoicedDate'] as String),
-      orderNumber: json['orderNumber'] as String,
-      deliveryDate: DateTime.parse(json['deliveryDate'] as String),
-      salesRepresentative: json['salesRepresentative'] as String,
-      shippingCompany: json['shippingCompany'] as String,
-      shipmentTrackingId: json['shipmentTrackingId'] as String,
-    );
+    try {
+      return Invoice(
+        id: json['id'] as String,
+        amount: json['amount'] as String,
+        paid: json['paid'] as bool,
+        dueDate: DateTime.fromMillisecondsSinceEpoch(
+            int.parse(json['dueDate'] as String)),
+        paidDate: json['paidDate'] != null
+            ? DateTime.fromMillisecondsSinceEpoch(
+                int.parse(json['paidDate'] as String))
+            : null,
+        grossAmount: json['grossAmount'] as String,
+        invoicedDate: DateTime.fromMillisecondsSinceEpoch(
+            int.parse(json['invoicedDate'] as String)),
+        orderNumber: json['orderNumber'] as String,
+        deliveryDate: DateTime.fromMillisecondsSinceEpoch(
+            int.parse(json['deliveryDate'] as String)),
+        salesRepresentative: json['salesRepresentative'] as String,
+        shippingCompany: json['shippingCompany'] as String,
+        shipmentTrackingId: json['shipmentTrackingId'] as String,
+      );
+    } catch (e) {
+      // Handle the exception here, for example, log the error or return a default object
+      print('Error parsing Invoice JSON: $e');
+      return Invoice(
+        id: '',
+        amount: '0',
+        paid: false,
+        dueDate: DateTime.now(),
+        paidDate: null,
+        grossAmount: '0',
+        invoicedDate: DateTime.now(),
+        orderNumber: '',
+        deliveryDate: DateTime.now(),
+        salesRepresentative: '',
+        shippingCompany: '',
+        shipmentTrackingId: '',
+      );
+    }
   }
 }
