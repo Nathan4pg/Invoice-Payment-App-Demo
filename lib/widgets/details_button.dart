@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/invoices_provider.dart';
+import 'package:flutter_invoice_app/models/invoice_model.dart';
 
 class DetailsButton extends StatefulWidget {
   final Invoice invoice;

@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/nathan.mcclellan@nutrien.com/Development/flutter
-FLUTTER_APPLICATION_PATH=/Users/nathan.mcclellan@nutrien.com/Development/Invoice-Payment-App-Demo
+FLUTTER_ROOT=/Users/nathanmccellan/Development/flutter
+FLUTTER_APPLICATION_PATH=/Users/nathanmccellan/Development/Invoice-Payment-App-Demo
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.0.0
