@@ -42,7 +42,7 @@ class InvoicesLoaded extends InvoicesState {
 class InvoicesError extends InvoicesState {
   final String message;
 
-  const InvoicesError(this.message);
+  const InvoicesError({required this.message});
 
   @override
   List<Object> get props => [message];
