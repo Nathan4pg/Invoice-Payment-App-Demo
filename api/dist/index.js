@@ -29,3 +29,42 @@ const port = process.env.PORT || 4000;
 app.listen(port, () => {
     console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
 });
+/**
+ * Example Query:
+
+ query GetInvoices($first: Int, $after: ID, $sortBy: SortByEnum = DUE_DATE_ASC, $sortDirection: SortDirectionEnum = ASC) {
+  invoices(first: $first, after: $after, sortBy: $sortBy, sortDirection: $sortDirection) {
+    edges {
+      cursor
+      node {
+        id
+        amount
+        paid
+        dueDate
+        paidDate
+        grossAmount
+        invoicedDate
+        orderNumber
+        deliveryDate
+        salesRepresentative
+        shippingCompany
+        shipmentTrackingId
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
+
+* Variables:
+
+{
+  "first": 10,
+  "sortBy": "DUE_DATE_DESC",
+  "after": null,
+  "sortDirection": "DESC"
+}
+ 
+ */
