@@ -33,20 +33,23 @@ class Invoice {
         id: json['id'] as String,
         amount: json['amount'] as String,
         paid: json['paid'] as bool,
-        dueDate: DateTime.parse(json['dueDate'] as String),
+        dueDate: DateTime.fromMillisecondsSinceEpoch(
+            int.parse(json['dueDate'] as String)),
         paidDate: json['paidDate'] != null
-            ? DateTime.parse(json['paidDate'] as String)
+            ? DateTime.fromMillisecondsSinceEpoch(
+                int.parse(json['paidDate'] as String))
             : null,
         grossAmount: json['grossAmount'] as String,
-        invoicedDate: DateTime.parse(json['invoicedDate'] as String),
+        invoicedDate: DateTime.fromMillisecondsSinceEpoch(
+            int.parse(json['invoicedDate'] as String)),
         orderNumber: json['orderNumber'] as String,
-        deliveryDate: DateTime.parse(json['deliveryDate'] as String),
+        deliveryDate: DateTime.fromMillisecondsSinceEpoch(
+            int.parse(json['deliveryDate'] as String)),
         salesRepresentative: json['salesRepresentative'] as String,
         shippingCompany: json['shippingCompany'] as String,
         shipmentTrackingId: json['shipmentTrackingId'] as String,
       );
     } catch (e) {
-// Handle the exception here, for example, log the error or return a default object
       print('Error parsing Invoice JSON: $e');
       return Invoice(
         id: '',
@@ -63,5 +66,22 @@ class Invoice {
         shipmentTrackingId: '',
       );
     }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'amount': amount,
+      'paid': paid,
+      'dueDate': dueDate.millisecondsSinceEpoch,
+      'paidDate': paidDate?.millisecondsSinceEpoch,
+      'grossAmount': grossAmount,
+      'invoicedDate': invoicedDate.millisecondsSinceEpoch,
+      'orderNumber': orderNumber,
+      'deliveryDate': deliveryDate.millisecondsSinceEpoch,
+      'salesRepresentative': salesRepresentative,
+      'shippingCompany': shippingCompany,
+      'shipmentTrackingId': shipmentTrackingId,
+    };
   }
 }

@@ -3,9 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_invoice_app/bloc/invoices/invoices_bloc.dart';
 import 'package:flutter_invoice_app/bloc/invoices/invoices_event.dart';
 import 'package:flutter_invoice_app/bloc/invoices/invoices_state.dart';
-import 'package:flutter_invoice_app/repository/invoices_repository.dart';
 import 'package:flutter_invoice_app/widgets/details_button.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:flutter_invoice_app/constants/enums.dart'; // Import the enums.dart file
+
+// class InvoicesQueryParams {
+//   final int first;
+//   final SortByEnum sortBy;
+//   final SortDirectionEnum sortDirection;
+
+//   InvoicesQueryParams({
+//     required this.first,
+//     required this.sortBy,
+//     required this.sortDirection,
+//   });
+// }
 
 class InvoicesListScreen extends StatelessWidget {
   const InvoicesListScreen({Key? key}) : super(key: key);
@@ -18,17 +29,15 @@ class InvoicesListScreen extends StatelessWidget {
       sortDirection: SortDirectionEnum.desc,
     );
 
-    return BlocProvider<InvoicesBloc>(
-      create: (context) => InvoicesBloc(
-          client: GraphQLClient(
-        cache: GraphQLCache(),
-        link: HttpLink('http://localhost:4000/graphql'),
-      ))
-        ..add(LoadInvoices(queryParams: queryParams)),
-      child: Scaffold(
+    context
+        .read<InvoicesBloc>()
+        .add(LoadInvoices(queryParams: queryParams)); // Add this line
+
+    return Scaffold(
         appBar: AppBar(title: const Text('Invoices')),
         body: BlocBuilder<InvoicesBloc, InvoicesState>(
           builder: (BuildContext context, InvoicesState state) {
+            print('Contest: $context');
             print('Current state: $state');
 
             if (state is InvoicesLoaded) {
@@ -76,8 +85,6 @@ class InvoicesListScreen extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
           },
-        ),
-      ),
-    );
+        ));
   }
 }

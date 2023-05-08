@@ -1,4 +1,4 @@
-import 'package:flutter_invoice_app/repository/invoices_repository.dart';
+import 'package:flutter_invoice_app/bloc/invoices/invoices_bloc.dart';
 
 abstract class InvoicesEvent {}
 
@@ -6,7 +6,7 @@ class LoadInvoices extends InvoicesEvent {
   final InvoicesQueryParams queryParams;
 
   LoadInvoices({required this.queryParams}) {
-    print('LoadInvoices event called with queryParams:');
+    print('LoadInvoices event created with queryParams:');
     print('  first: ${queryParams.first}');
     print('  sortBy: ${queryParams.sortBy}');
     print('  sortDirection: ${queryParams.sortDirection}');
