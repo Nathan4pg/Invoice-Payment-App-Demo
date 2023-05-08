@@ -37,13 +37,9 @@ class InvoicesListScreen extends StatelessWidget {
         appBar: AppBar(title: const Text('Invoices')),
         body: BlocBuilder<InvoicesBloc, InvoicesState>(
           builder: (BuildContext context, InvoicesState state) {
-            print('Contest: $context');
-            print('Current state: $state');
-
             if (state is InvoicesLoaded) {
               final selectedInvoices = state.selectedInvoices;
 
-              print('Invoices loaded: ${state.invoices}');
               return ListView.builder(
                 itemCount: state.invoices.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -72,13 +68,10 @@ class InvoicesListScreen extends StatelessWidget {
                 },
               );
             } else if (state is InvoicesLoading) {
-              print('Invoices loading...');
               return const Center(child: CircularProgressIndicator());
             } else if (state is InvoicesError) {
-              print('Error loading invoices: ${state.message}');
               return Center(child: Text('Error: ${state.message}'));
             } else {
-              print('Unknown state: $state');
               context
                   .read<InvoicesBloc>()
                   .add(LoadInvoices(queryParams: queryParams));

@@ -104,7 +104,6 @@ class InvoicesBloc extends Bloc<InvoicesEvent, InvoicesState>
 
   Future<void> _mapLoadInvoicesToState(
       LoadInvoices event, Emitter<InvoicesState> emit) async {
-    print('LoadInvoices event triggered');
     emit(const InvoicesLoading());
 
     try {
@@ -119,25 +118,19 @@ class InvoicesBloc extends Bloc<InvoicesEvent, InvoicesState>
       );
 
       final QueryResult result = await _client.query(options);
-      print('Query result: $result');
-
       if (result.hasException) {
-        print('Query exception: ${result.exception.toString()}');
         emit(const InvoicesError(message: 'Failed to load invoices'));
       } else {
         final List<Invoice> invoices =
             (result.data?['invoices']['edges'] as List)
                 .map((edge) => Invoice.fromJson(edge['node']))
                 .toList();
-
-        print('Invoices fetched: ${invoices.length}');
         emit(InvoicesLoaded(
           invoices: invoices,
           selectedInvoices: const {},
         ));
       }
     } catch (e) {
-      print('Failed to load invoices: $e');
       emit(const InvoicesError(message: 'Failed to load invoices'));
     }
   }
