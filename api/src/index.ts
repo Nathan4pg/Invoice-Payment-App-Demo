@@ -5,13 +5,11 @@ import { typeDefs, resolvers } from "./schema";
 
 const app = express();
 
-// Configure CORS options
 const corsOptions = {
-  origin: "*", // You can specify your allowed origins here, e.g., "http://localhost:3000"
-  credentials: true, // Enable this if you want to allow cookies to be sent with requests
+  origin: "*",
+  credentials: true,
 };
 
-// Apply CORS middleware
 app.use(cors(corsOptions));
 
 const server = new ApolloServer({

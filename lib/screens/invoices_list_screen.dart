@@ -4,19 +4,7 @@ import 'package:flutter_invoice_app/bloc/invoices/invoices_bloc.dart';
 import 'package:flutter_invoice_app/bloc/invoices/invoices_event.dart';
 import 'package:flutter_invoice_app/bloc/invoices/invoices_state.dart';
 import 'package:flutter_invoice_app/widgets/details_button.dart';
-import 'package:flutter_invoice_app/constants/enums.dart'; // Import the enums.dart file
-
-// class InvoicesQueryParams {
-//   final int first;
-//   final SortByEnum sortBy;
-//   final SortDirectionEnum sortDirection;
-
-//   InvoicesQueryParams({
-//     required this.first,
-//     required this.sortBy,
-//     required this.sortDirection,
-//   });
-// }
+import 'package:flutter_invoice_app/constants/enums.dart';
 
 class InvoicesListScreen extends StatelessWidget {
   const InvoicesListScreen({Key? key}) : super(key: key);

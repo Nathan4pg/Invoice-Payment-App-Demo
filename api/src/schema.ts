@@ -29,7 +29,6 @@ interface Invoice {
 
 const invoices: Invoice[] = [];
 
-// Generate invoices with unique IDs
 for (let i = 0; i < 100; i++) {
   const amount: string = faker.finance.amount(1000, 5000, 2, "$");
   const paid: boolean = faker.datatype.boolean();
@@ -44,7 +43,7 @@ for (let i = 0; i < 100; i++) {
   const shipmentTrackingId: string = `TRACK-${faker.random.alphaNumeric(8)}`;
 
   invoices.push({
-    id: faker.random.alphaNumeric(16).toUpperCase(), // Use a unique value for each invoice
+    id: faker.random.alphaNumeric(16).toUpperCase(),
     amount: amount,
     paid: paid,
     dueDate: faker.date.future(30),
@@ -154,7 +153,7 @@ export const resolvers = {
         sortDirection: SortDirectionEnum;
       }
     ): InvoicesConnection => {
-      console.log("Query: invoices"); // Log when the query is hit
+      console.log("Query: invoices");
 
       let sortedInvoices = invoices.slice();
 
@@ -195,7 +194,7 @@ export const resolvers = {
           edges.length > 0 ? edges[edges.length - 1].cursor : undefined,
       };
 
-      console.log("Response:", { edges, pageInfo }); // Log the response
+      console.log("Response:", { edges, pageInfo });
 
       return {
         edges,
