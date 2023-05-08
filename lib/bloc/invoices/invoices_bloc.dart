@@ -73,8 +73,6 @@ class InvoicesQueryParams {
   }
 }
 
-// ... (keep the rest of the code the same)
-
 class InvoicesBloc extends Bloc<InvoicesEvent, InvoicesState>
     with HydratedMixin {
   final GraphQLClient _client;
