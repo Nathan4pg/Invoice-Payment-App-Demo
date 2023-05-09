@@ -14,3 +14,10 @@ In another terminal navigate to the project root and run:
 
 - flutter pub get
 - flutter run
+
+## Troubelshooting
+
+If you run into any issues be sure to run:
+
+- flutter clean
+- flutter run
