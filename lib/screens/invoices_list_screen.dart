@@ -21,51 +21,49 @@ class InvoicesListScreen extends StatelessWidget {
         .read<InvoicesBloc>()
         .add(LoadInvoices(queryParams: queryParams)); // Add this line
 
-    return Scaffold(
-        appBar: AppBar(title: const Text('Invoices')),
-        body: BlocBuilder<InvoicesBloc, InvoicesState>(
-          builder: (BuildContext context, InvoicesState state) {
-            if (state is InvoicesLoaded) {
-              final selectedInvoices = state.selectedInvoices;
+    return BlocBuilder<InvoicesBloc, InvoicesState>(
+      builder: (BuildContext context, InvoicesState state) {
+        if (state is InvoicesLoaded) {
+          final selectedInvoices = state.selectedInvoices;
 
-              return ListView.builder(
-                itemCount: state.invoices.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final invoice = state.invoices[index];
-                  final isSelected = selectedInvoices.contains(invoice.id);
+          return ListView.builder(
+            itemCount: state.invoices.length,
+            itemBuilder: (BuildContext context, int index) {
+              final invoice = state.invoices[index];
+              final isSelected = selectedInvoices.contains(invoice.id);
 
-                  return ListTile(
-                    leading: Checkbox(
-                      value: isSelected,
-                      onChanged: (bool? value) {
-                        if (value != null) {
-                          context.read<InvoicesBloc>().add(
-                                ToggleInvoiceSelection(invoiceId: invoice.id),
-                              );
-                        }
-                      },
-                    ),
-                    title: Text(invoice.orderNumber),
-                    trailing: DetailsButton(invoice: invoice),
-                    onTap: () {
+              return ListTile(
+                leading: Checkbox(
+                  value: isSelected,
+                  onChanged: (bool? value) {
+                    if (value != null) {
                       context.read<InvoicesBloc>().add(
                             ToggleInvoiceSelection(invoiceId: invoice.id),
                           );
-                    },
-                  );
+                    }
+                  },
+                ),
+                title: Text(invoice.orderNumber),
+                trailing: DetailsButton(invoice: invoice),
+                onTap: () {
+                  context.read<InvoicesBloc>().add(
+                        ToggleInvoiceSelection(invoiceId: invoice.id),
+                      );
                 },
               );
-            } else if (state is InvoicesLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is InvoicesError) {
-              return Center(child: Text('Error: ${state.message}'));
-            } else {
-              context
-                  .read<InvoicesBloc>()
-                  .add(LoadInvoices(queryParams: queryParams));
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
-        ));
+            },
+          );
+        } else if (state is InvoicesLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is InvoicesError) {
+          return Center(child: Text('Error: ${state.message}'));
+        } else {
+          context
+              .read<InvoicesBloc>()
+              .add(LoadInvoices(queryParams: queryParams));
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 }

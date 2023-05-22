@@ -4,12 +4,10 @@ abstract class InvoicesEvent {}
 
 class LoadInvoices extends InvoicesEvent {
   final InvoicesQueryParams queryParams;
-
   LoadInvoices({required this.queryParams});
 }
 
 class ToggleInvoiceSelection extends InvoicesEvent {
   final String invoiceId;
-
   ToggleInvoiceSelection({required this.invoiceId});
 }
