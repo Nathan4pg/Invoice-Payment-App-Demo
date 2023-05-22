@@ -8,12 +8,10 @@ const cors_1 = __importDefault(require("cors"));
 const apollo_server_express_1 = require("apollo-server-express");
 const schema_1 = require("./schema");
 const app = (0, express_1.default)();
-
 const corsOptions = {
     origin: "*",
     credentials: true,
 };
-
 app.use((0, cors_1.default)(corsOptions));
 const server = new apollo_server_express_1.ApolloServer({
     typeDefs: schema_1.typeDefs,

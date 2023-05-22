@@ -17,7 +17,6 @@ var SortDirectionEnum;
     SortDirectionEnum["DESC"] = "DESC";
 })(SortDirectionEnum || (SortDirectionEnum = {}));
 const invoices = [];
-// Generate invoices with unique IDs
 for (let i = 0; i < 100; i++) {
     const amount = faker_1.faker.finance.amount(1000, 5000, 2, "$");
     const paid = faker_1.faker.datatype.boolean();
@@ -110,7 +109,7 @@ exports.typeDefs = (0, graphql_tag_1.default) `
 exports.resolvers = {
     Query: {
         invoices: (_, { first, after, sortBy, sortDirection, }) => {
-            console.log("Query: invoices"); // Log when the query is hit
+            console.log("Query: invoices");
             let sortedInvoices = invoices.slice();
             if (sortBy === SortByEnum.DUE_DATE_ASC) {
                 sortedInvoices.sort((a, b) => (a.dueDate > b.dueDate ? 1 : -1));
@@ -144,7 +143,7 @@ exports.resolvers = {
                 hasNextPage: endIndex < sortedInvoices.length,
                 endCursor: edges.length > 0 ? edges[edges.length - 1].cursor : undefined,
             };
-            console.log("Response:", { edges, pageInfo }); // Log the response
+            console.log("Response:", { edges, pageInfo });
             return {
                 edges,
                 pageInfo,
