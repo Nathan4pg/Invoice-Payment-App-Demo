@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+pubspec.lock
 
 # IntelliJ related
 *.iml
@@ -45,6 +46,7 @@ migrate_working_dir/
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+**/ios/Podfile.lock
 
 # macOS
 **/Flutter/ephemeral/
@@ -84,6 +86,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/local.properties
 
 # node modules
 /api/node_modules
