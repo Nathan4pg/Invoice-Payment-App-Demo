@@ -30,9 +30,9 @@ interface Invoice {
 const invoices: Invoice[] = [];
 
 for (let i = 0; i < 100; i++) {
-  const amount: string = faker.finance.amount(1000, 5000, 2, "$");
+  const amount: string = faker.finance.amount(1000, 5000, 2, "$", true);
   const paid: boolean = faker.datatype.boolean();
-  const grossAmount: string = faker.finance.amount(1000, 5000, 2, "$");
+  const grossAmount: string = faker.finance.amount(1000, 5000, 2, "$", true);
   const invoicedDate: Date = faker.date.past(30);
   const orderNumber: string = `ORD-${faker.datatype.number(9999)}`;
   const deliveryDate: Date = faker.date.future(30);

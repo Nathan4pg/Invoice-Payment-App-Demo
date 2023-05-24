@@ -18,9 +18,9 @@ var SortDirectionEnum;
 })(SortDirectionEnum || (SortDirectionEnum = {}));
 const invoices = [];
 for (let i = 0; i < 100; i++) {
-    const amount = faker_1.faker.finance.amount(1000, 5000, 2, "$");
+    const amount = faker_1.faker.finance.amount(1000, 5000, 2, "$", true);
     const paid = faker_1.faker.datatype.boolean();
-    const grossAmount = faker_1.faker.finance.amount(1000, 5000, 2, "$");
+    const grossAmount = faker_1.faker.finance.amount(1000, 5000, 2, "$", true);
     const invoicedDate = faker_1.faker.date.past(30);
     const orderNumber = `ORD-${faker_1.faker.datatype.number(9999)}`;
     const deliveryDate = faker_1.faker.date.future(30);
